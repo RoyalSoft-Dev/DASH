@@ -181,11 +181,11 @@ export default function SettingsDrawer() {
 
           {renderDirection}
 
-          {renderLayout}
+          {/* {renderLayout} */}
 
           {renderStretch}
 
-          {renderPresets}
+          {/* {renderPresets} */}
         </Stack>
       </Scrollbar>
 

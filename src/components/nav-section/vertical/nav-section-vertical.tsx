@@ -6,9 +6,11 @@ import Collapse from '@mui/material/Collapse';
 //
 import { NavSectionProps, NavListProps, NavConfigProps } from '../types';
 import { navVerticalConfig } from '../config';
-import { StyledSubheader } from './styles';
+import { StyledIcon, StyledSubheader } from './styles';
 
 import NavList from './nav-list';
+import { Box, Button, Typography } from '@mui/material';
+import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 
 // ----------------------------------------------------------------------
 
@@ -55,7 +57,7 @@ function Group({ subheader, items, config }: GroupProps) {
   ));
 
   return (
-    <List disablePadding sx={{ px: 2 }}>
+    <List disablePadding sx={{ px: 2, height: '100%' }}>
       {subheader ? (
         <>
           <StyledSubheader disableGutters disableSticky onClick={handleToggle} config={config}>
@@ -65,7 +67,21 @@ function Group({ subheader, items, config }: GroupProps) {
           <Collapse in={open}>{renderContent}</Collapse>
         </>
       ) : (
-        renderContent
+        <Box sx={{ height: '100%' }}>
+          {renderContent}
+          <Button sx={{
+            marginTop: '200px',
+            marginBottom: '100px',
+            width: '100%',
+            height: '50px',
+            backgroundColor: '#0A1828'
+          }}>
+            <LogoutRoundedIcon sx={{ color: 'white' }} />
+            <Typography color={'white'} marginLeft={2} fontWeight={'bold'} fontSize={18}>
+              Log Out
+            </Typography>
+          </Button>
+        </Box>
       )}
     </List>
   );

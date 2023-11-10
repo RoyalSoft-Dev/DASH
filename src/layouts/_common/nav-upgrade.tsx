@@ -11,6 +11,8 @@ import { paths } from 'src/routes/paths';
 // locales
 // components
 import Label from 'src/components/label';
+// Load MUI icons
+import EditIcon from '@mui/icons-material/Edit';
 
 // ----------------------------------------------------------------------
 
@@ -27,36 +29,37 @@ export default function NavUpgrade() {
     >
       <Stack alignItems="center">
         <Box sx={{ position: 'relative' }}>
-          <Avatar src={user?.photoURL} alt={user?.displayName} sx={{ width: 48, height: 48 }} />
+          <Avatar src={user?.photoURL} alt={user?.displayName} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
           <Label
-            color="success"
             variant="filled"
             sx={{
+              backgroundColor: 'white',
+              top: 60,
               px: 0.5,
-              top: 36,
-              left: 40,
-              height: 20,
+              left: 60,
+              height: 25,
+              width: 25,
               position: 'absolute',
-              borderBottomLeftRadius: 2,
+              borderRadius: 1
             }}
           >
-
+            <EditIcon sx={{ width: 12, height: 12 }} color='success' />
           </Label>
         </Box>
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
-          <Typography variant="subtitle2" noWrap>
+          <Typography variant="subtitle2" noWrap fontSize={20} color={'white'}>
             {user?.displayName}
           </Typography>
 
-          <Typography variant="body2" noWrap sx={{ color: 'text.disabled' }}>
+          <Typography variant="body2" noWrap fontSize={15} color={'white'}>
             {user?.email}
           </Typography>
         </Stack>
 
-        <Button variant="contained" href={paths.minimalUI} target="_blank" rel="noopener">
+        {/* <Button variant="contained" href={paths.minimalUI} target="_blank" rel="noopener">
           Upgrade to Pro
-        </Button>
+        </Button> */}
       </Stack>
     </Stack>
   );

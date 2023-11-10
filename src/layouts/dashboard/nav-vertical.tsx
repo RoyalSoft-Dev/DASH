@@ -15,6 +15,7 @@ import { NavSectionVertical } from 'src/components/nav-section';
 import { NAV } from '../config-layout';
 import { useNavData } from './config-navigation';
 import { NavToggleButton, NavUpgrade } from '../_common';
+import { Button } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
@@ -52,6 +53,8 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     >
       <Logo sx={{ mt: 3, ml: 4, mb: 1 }} />
 
+      <NavUpgrade />
+
       <NavSectionVertical
         data={navData}
         config={{
@@ -61,7 +64,6 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      <NavUpgrade />
     </Scrollbar>
   );
 
@@ -69,11 +71,12 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
     <Box
       component="nav"
       sx={{
+        backgroundColor: '#388E3C',
         flexShrink: { lg: 0 },
         width: { lg: NAV.W_VERTICAL },
       }}
     >
-      <NavToggleButton />
+      {/* <NavToggleButton /> */}
 
       {lgUp ? (
         <Stack
@@ -96,7 +99,9 @@ export default function NavVertical({ openNav, onCloseNav }: Props) {
             },
           }}
         >
-          {renderContent}
+          <Box sx={{ backgroundColor: '#388E3C', height: '100%' }}>
+            {renderContent}
+          </Box>
         </Drawer>
       )}
     </Box>

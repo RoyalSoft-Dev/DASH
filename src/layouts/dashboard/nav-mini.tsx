@@ -24,11 +24,12 @@ export default function NavMini() {
     <Box
       component="nav"
       sx={{
+        backgroundColor: '#388E3C',
         flexShrink: { lg: 0 },
         width: { lg: NAV.W_MINI },
       }}
     >
-      <NavToggleButton
+      {/* <NavToggleButton
         sx={{
           top: 22,
           left: NAV.W_MINI - 12,
@@ -53,7 +54,7 @@ export default function NavMini() {
             currentRole: user?.role || 'admin',
           }}
         />
-      </Stack>
+      </Stack> */}
     </Box>
   );
 }
