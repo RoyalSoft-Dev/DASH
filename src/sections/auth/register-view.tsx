@@ -18,8 +18,6 @@ import { RouterLink } from 'src/routes/components';
 import { useSearchParams, useRouter } from 'src/routes/hooks';
 // config
 import { PATH_AFTER_LOGIN } from 'src/config-global';
-// auth
-import { useAuthContext } from 'src/auth/hooks';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
@@ -27,8 +25,6 @@ import FormProvider, { RHFTextField } from 'src/components/hook-form';
 // ----------------------------------------------------------------------
 
 export default function JwtRegisterView() {
-  const { register } = useAuthContext();
-
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -66,7 +62,7 @@ export default function JwtRegisterView() {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await register?.(data.email, data.password, data.firstName, data.lastName);
+      // Register function call
 
       router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {

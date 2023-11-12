@@ -2,8 +2,6 @@ import { useCallback, useEffect } from 'react';
 // routes
 import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
-//
-import { useAuthContext } from '../hooks';
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +16,7 @@ export default function GuestGuard({ children }: Props) {
 
   const returnTo = searchParams.get('returnTo') || paths.dashboard.dashboard;
 
-  const { authenticated } = useAuthContext();
+  const authenticated = false;
 
   const check = useCallback(() => {
     if (authenticated) {

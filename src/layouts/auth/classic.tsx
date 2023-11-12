@@ -5,8 +5,6 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-// auth
-import { useAuthContext } from 'src/auth/hooks';
 // routes
 import { paths } from 'src/routes/paths';
 import { RouterLink } from 'src/routes/components';
@@ -35,8 +33,6 @@ type Props = {
 };
 
 export default function AuthClassicLayout({ children, image, title }: Props) {
-  const { method } = useAuthContext();
-
   const theme = useTheme();
 
   const mdUp = useResponsive('up', 'md');
@@ -110,9 +106,7 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
                 sx={{
                   width: 32,
                   height: 32,
-                  ...(method !== option.id && {
-                    filter: 'grayscale(100%)',
-                  }),
+                  filter: 'grayscale(100%)',
                 }}
               />
             </Link>
