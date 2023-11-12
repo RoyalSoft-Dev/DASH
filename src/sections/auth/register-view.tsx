@@ -21,6 +21,13 @@ import { PATH_AFTER_LOGIN } from 'src/config-global';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+// Tell phone
+import {
+  MuiTelInput,
+  MuiTelInputCountry,
+  MuiTelInputInfo,
+  MuiTelInputContinent
+} from 'mui-tel-input'
 
 // ----------------------------------------------------------------------
 
@@ -36,17 +43,17 @@ export default function JwtRegisterView() {
   const password = useBoolean();
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string().required('First name required'),
-    lastName: Yup.string().required('Last name required'),
+    name: Yup.string().required('Name required'),
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
+    confirmPassword: Yup.string().required('Confirm Password is required'),
   });
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   };
 
   const methods = useForm({
@@ -59,6 +66,16 @@ export default function JwtRegisterView() {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
+
+  // Tell phone
+  const [value, setValue] = useState<string>('')
+
+  const handleChange = (newValue: string, info: MuiTelInputInfo) => {
+    setValue(newValue)
+  }
+
+  const continents: MuiTelInputContinent[] = ['EU']
+  const excludedCountries: MuiTelInputCountry[] = ['FR']
 
   const onSubmit = handleSubmit(async (data) => {
     try {
@@ -74,13 +91,14 @@ export default function JwtRegisterView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-      <Typography variant="h4">Get started absolutely free</Typography>
+      <Typography variant="h4">Welcome to @App Name</Typography>
+      <Typography variant="h4">Register an account</Typography>
 
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2"> Already have an account? </Typography>
 
         <Link href={paths.auth.login} component={RouterLink} variant="subtitle2">
-          Sign in
+          Login
         </Link>
       </Stack>
     </Stack>
@@ -113,12 +131,16 @@ export default function JwtRegisterView() {
       <Stack spacing={2.5}>
         {!!errorMsg && <Alert severity="error">{errorMsg}</Alert>}
 
-        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <RHFTextField name="firstName" label="First name" />
-          <RHFTextField name="lastName" label="Last name" />
-        </Stack>
+        <RHFTextField name="name" label="Name" />
+        <RHFTextField name="email" label="Email" />
 
-        <RHFTextField name="email" label="Email address" />
+        <MuiTelInput
+          defaultCountry="US"
+          value={value}
+          onChange={handleChange}
+          continents={continents}
+          excludedCountries={excludedCountries}
+        />
 
         <RHFTextField
           name="password"
@@ -135,15 +157,30 @@ export default function JwtRegisterView() {
           }}
         />
 
+        <RHFTextField
+          name="confirmPassword"
+          label="Confirm Password"
+          type={password.value ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={password.onToggle} edge="end">
+                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+
         <LoadingButton
           fullWidth
-          color="inherit"
+          sx={{ backgroundColor: '#388E3C' }}
           size="large"
           type="submit"
           variant="contained"
           loading={isSubmitting}
         >
-          Create account
+          Register
         </LoadingButton>
       </Stack>
     </FormProvider>
@@ -155,7 +192,7 @@ export default function JwtRegisterView() {
 
       {renderForm}
 
-      {renderTerms}
+      {/* {renderTerms} */}
     </>
   );
 }

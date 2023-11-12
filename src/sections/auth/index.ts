@@ -1,2 +1,2 @@
-export { default as JwtLoginView } from "./login-view";
-export { default as JwtRegisterView } from "./register-view";
+export { default as LoginView } from "./login-view";
+export { default as RegisterView } from "./register-view";
