@@ -34,7 +34,7 @@ export const dashboardRoutes = [
       { element: <IndexPage />, index: true },
       { path: 'users', element: <PageTwo /> },
       { path: 'team-management', element: <PageThree /> },
-      { path: 'settings', element: <PageThree /> },
+      { path: 'settings', element: <PageFour /> },
       // {
       //   path: 'group',
       //   children: [

@@ -17,7 +17,7 @@ import ProgressBar from 'src/components/progress-bar';
 import { MotionLazy } from 'src/components/animate/motion-lazy';
 import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
 // auth
-import { AuthProvider, AuthConsumer } from 'src/auth/context/jwt';
+import { AuthProvider, AuthConsumer } from 'src/auth/context';
 
 // ----------------------------------------------------------------------
 
@@ -37,27 +37,27 @@ export default function App() {
   useScrollToTop();
 
   return (
-    <AuthProvider>
-      <SettingsProvider
-        defaultSettings={{
-          themeMode: 'light', // 'light' | 'dark'
-          themeDirection: 'ltr', //  'rtl' | 'ltr'
-          themeContrast: 'default', // 'default' | 'bold'
-          themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
-          themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
-          themeStretch: false,
-        }}
-      >
-        <ThemeProvider>
-          <MotionLazy>
-            <SettingsDrawer />
-            <ProgressBar />
-            <AuthConsumer>
-              <Router />
-            </AuthConsumer>
-          </MotionLazy>
-        </ThemeProvider>
-      </SettingsProvider>
-    </AuthProvider>
+    // <AuthProvider>
+    <SettingsProvider
+      defaultSettings={{
+        themeMode: 'light', // 'light' | 'dark'
+        themeDirection: 'ltr', //  'rtl' | 'ltr'
+        themeContrast: 'default', // 'default' | 'bold'
+        themeLayout: 'vertical', // 'vertical' | 'horizontal' | 'mini'
+        themeColorPresets: 'default', // 'default' | 'cyan' | 'purple' | 'blue' | 'orange' | 'red'
+        themeStretch: false,
+      }}
+    >
+      <ThemeProvider>
+        <MotionLazy>
+          <SettingsDrawer />
+          <ProgressBar />
+          <AuthConsumer>
+            <Router />
+          </AuthConsumer>
+        </MotionLazy>
+      </ThemeProvider>
+    </SettingsProvider>
+    // </AuthProvider>
   );
 }

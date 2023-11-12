@@ -10,39 +10,10 @@ import { SplashScreen } from 'src/components/loading-screen';
 // ----------------------------------------------------------------------
 
 // JWT
-const JwtLoginPage = lazy(() => import('src/pages/auth/jwt/login'));
-const JwtRegisterPage = lazy(() => import('src/pages/auth/jwt/register'));
+const JwtLoginPage = lazy(() => import('src/pages/auth/login'));
+const JwtRegisterPage = lazy(() => import('src/pages/auth/register'));
 
 // ----------------------------------------------------------------------
-
-const authJwt = {
-  path: '',
-  element: (
-    <GuestGuard>
-      <Suspense fallback={<SplashScreen />}>
-        <Outlet />
-      </Suspense>
-    </GuestGuard>
-  ),
-  children: [
-    {
-      path: 'login',
-      element: (
-        <AuthClassicLayout>
-          <JwtLoginPage />
-        </AuthClassicLayout>
-      ),
-    },
-    {
-      path: 'register',
-      element: (
-        <AuthClassicLayout title="Manage the job more effectively with Minimal">
-          <JwtRegisterPage />
-        </AuthClassicLayout>
-      ),
-    },
-  ],
-};
 
 export const authRoutes = [
   {
