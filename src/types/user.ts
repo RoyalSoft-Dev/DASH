@@ -1,4 +1,4 @@
-import { CustomFile } from 'src/components/upload';
+// import { CustomFile } from "src/components/upload";
 
 // ----------------------------------------------------------------------
 
@@ -120,7 +120,7 @@ export type IUserAccount = {
   address: string | null;
   zipCode: string | null;
   phoneNumber: string | null;
-  photoURL: CustomFile | string | null;
+  // photoURL: CustomFile | string | null;
 };
 
 export type IUserAccountBillingHistory = {

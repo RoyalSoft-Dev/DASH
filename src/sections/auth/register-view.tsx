@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -28,6 +28,10 @@ import {
   MuiTelInputInfo,
   MuiTelInputContinent
 } from 'mui-tel-input'
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { reRegisterSnapshot, registerUser } from 'src/store/actions/authAction';
+import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +45,23 @@ export default function JwtRegisterView() {
   const returnTo = searchParams.get('returnTo');
 
   const password = useBoolean();
+
+  // Defined by smile
+  const dispatch: any = useDispatch()
+  const { uid, companyID } = useSelector((state: any) => state.auth)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (uid) {
+      navigate('/dashboard')
+    } else {
+      if (!companyID) {
+        navigate('/auth/login')
+      } else {
+        navigate('/auth/register')
+      }
+    }
+  })
 
   const RegisterSchema = Yup.object().shape({
     name: Yup.string().required('Name required'),
@@ -68,10 +89,10 @@ export default function JwtRegisterView() {
   } = methods;
 
   // Tell phone
-  const [value, setValue] = useState<string>('')
+  const [phoneNumber, setPhoneNumber] = useState<string>('')
 
   const handleChange = (newValue: string, info: MuiTelInputInfo) => {
-    setValue(newValue)
+    setPhoneNumber(newValue)
   }
 
   const continents: MuiTelInputContinent[] = ['EU']
@@ -80,8 +101,22 @@ export default function JwtRegisterView() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       // Register function call
+      if (data.password !== data.confirmPassword) {
+        toast.warning('Password incorrect')
+        return
+      } else {
+        const userInfo = {
+          ...data,
+          phoneNumber
+        }
 
-      router.push(returnTo || PATH_AFTER_LOGIN);
+        dispatch(registerUser(companyID, userInfo, () => {
+          navigate('/auth/login')
+          toast.success('Registered successfully')
+        }))
+      }
+
+      // router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
@@ -135,8 +170,7 @@ export default function JwtRegisterView() {
         <RHFTextField name="email" label="Email" />
 
         <MuiTelInput
-          defaultCountry="US"
-          value={value}
+          value={phoneNumber}
           onChange={handleChange}
           continents={continents}
           excludedCountries={excludedCountries}

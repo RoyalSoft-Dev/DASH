@@ -11,8 +11,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 // routes
-import { paths } from 'src/routes/paths';
-import { RouterLink } from 'src/routes/components';
 import { useSearchParams, useRouter } from 'src/routes/hooks';
 // config
 import { PATH_AFTER_LOGIN } from 'src/config-global';
@@ -21,9 +19,14 @@ import { useBoolean } from 'src/hooks/use-boolean';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
-import { Box, Card, CardMedia, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Button, Card, CardMedia, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormHelperText, TextField } from '@mui/material';
 // Logo
 import DashLogo from 'src/assets/images/logo/DASH.png'
+// Load firebase database
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { getCompanyID, loginUser } from 'src/store/actions/authAction';
+import { toast } from 'react-toastify';
 
 // ----------------------------------------------------------------------
 
@@ -38,14 +41,20 @@ export default function LoginView() {
 
   const password = useBoolean();
 
+  // Defined by smile
+  const dispatch: any = useDispatch()
+  const navigate = useNavigate()
+  const [companyPassword, setCompanyPassword] = useState('')
+  const [openInputPasswordDialog, setOpenInputPasswordDialog] = useState(false)
+
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),
     password: Yup.string().required('Password is required'),
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: 'smile@dash.com',
+    password: '111111',
   };
 
   const methods = useForm({
@@ -62,14 +71,31 @@ export default function LoginView() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       // Login function call
+      console.log(data)
+      dispatch(loginUser(data, () => {
+        navigate('/dashboard')
+        toast.success('Login Success')
+      }))
 
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      // router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
   });
+
+  // Defined by smile
+  const onSelectCompanyByPassword = () => {
+    setOpenInputPasswordDialog(true)
+  }
+
+  const handleCompanyPassword = () => {
+    dispatch(getCompanyID(companyPassword, () => {
+      navigate('/auth/register')
+      toast.success('Selected the company')
+    }))
+  }
 
   const renderHead = (
     <Stack sx={{ mb: 5 }}>
@@ -82,9 +108,9 @@ export default function LoginView() {
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2">Don't have an account?</Typography>
 
-        <Link component={RouterLink} href={paths.auth.register} variant="subtitle2">
+        <Typography sx={{ textDecoration: 'underline', cursor: 'pointer' }} variant="subtitle2" onClick={onSelectCompanyByPassword}>
           Create an account
-        </Link>
+        </Typography>
       </Stack>
     </Stack>
   );
@@ -132,14 +158,40 @@ export default function LoginView() {
   );
 
   return (
-    <FormProvider methods={methods} onSubmit={onSubmit}>
-      {renderHead}
+    <Box>
+      <FormProvider methods={methods} onSubmit={onSubmit}>
+        {renderHead}
 
-      {/* <Alert severity="info" sx={{ mb: 3 }}>
-        Use email : <strong>demo@minimals.cc</strong> / password :<strong> demo1234</strong>
-      </Alert> */}
+        {renderForm}
+      </FormProvider>
 
-      {renderForm}
-    </FormProvider>
+      <Dialog
+        open={openInputPasswordDialog}
+        onClose={() => setOpenInputPasswordDialog(false)}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          <Typography fontWeight={'bold'} fontSize={28} align='center'>Password</Typography>
+          <Typography fontSize={20} align='center'>Please input the password to view the signup page.</Typography>
+        </DialogTitle>
+        <DialogContent>
+          <FormControl fullWidth>
+            <FormHelperText>
+              Password
+            </FormHelperText>
+            <TextField type='password' value={companyPassword} onChange={e => setCompanyPassword(e.target.value)} />
+          </FormControl>
+        </DialogContent>
+        <DialogActions>
+          <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'} sx={{ width: '100%' }}>
+            <Button fullWidth variant='outlined' onClick={() => setOpenInputPasswordDialog(false)}>Discard</Button>
+            <Button fullWidth variant='contained' sx={{ backgroundColor: '#388E3C', color: 'white', marginLeft: 3 }} onClick={handleCompanyPassword} autoFocus>
+              Create
+            </Button>
+          </Box>
+        </DialogActions>
+      </Dialog>
+    </Box>
   );
 }
