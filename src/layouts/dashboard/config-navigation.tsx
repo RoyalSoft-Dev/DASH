@@ -3,11 +3,6 @@ import { useMemo } from 'react';
 import { paths } from 'src/routes/paths';
 // components
 import SvgColor from 'src/components/svg-color';
-// MUI icons
-import DashboardOutlinedIcon from '@mui/icons-material/DashboardOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import Person2OutlinedIcon from '@mui/icons-material/Person2Outlined';
-
 // ----------------------------------------------------------------------
 
 const icon = (name: string) => (

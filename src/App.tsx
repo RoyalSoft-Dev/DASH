@@ -24,12 +24,14 @@ import { useEffect, useState } from 'react';
 import { store, persistor } from './store/index';
 import { PersistGate } from 'redux-persist/integration/react';
 import { reRegisterSnapshot } from './store/actions/authAction';
+import { EmailAuthProvider, getAuth, reauthenticateWithCredential } from 'firebase/auth'
 
 // ----------------------------------------------------------------------
 
 function App() {
   useScrollToTop();
 
+  const dispatch: any = useDispatch()
   let { uid } = useSelector((state: any) => state.auth)
   const navigate = useNavigate()
 

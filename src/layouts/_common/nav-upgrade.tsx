@@ -4,8 +4,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-// hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // routes
 import { paths } from 'src/routes/paths';
 // locales
@@ -17,7 +15,6 @@ import EditIcon from '@mui/icons-material/Edit';
 // ----------------------------------------------------------------------
 
 export default function NavUpgrade() {
-  const { user } = useMockedUser();
 
   return (
     <Stack
@@ -29,7 +26,7 @@ export default function NavUpgrade() {
     >
       <Stack alignItems="center">
         <Box sx={{ position: 'relative' }}>
-          <Avatar src={user?.photoURL} alt={user?.displayName} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
+          <Avatar src={''} alt={'smile'} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
           <Label
             variant="filled"
             sx={{
@@ -49,11 +46,11 @@ export default function NavUpgrade() {
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap fontSize={20} color={'white'}>
-            {user?.displayName}
+            {'Brian'}
           </Typography>
 
           <Typography variant="body2" noWrap fontSize={15} color={'white'}>
-            {user?.email}
+            {'smiledev10162@gmail.com'}
           </Typography>
         </Stack>
 

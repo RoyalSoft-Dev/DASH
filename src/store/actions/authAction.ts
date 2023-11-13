@@ -7,6 +7,7 @@ import {
   where,
   getDocs,
   setDoc,
+  onSnapshot,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -86,20 +87,16 @@ export const loginUser = (data: any, onSuccess: any) => async (
       .then((credential) => {
         const uid = credential.user.uid;
 
-        const colRef = collection(db, "users");
-        const documentRef = doc(colRef, uid);
-        getDoc(documentRef)
-          .then((doc) => {
-            dispatch({
-              type: "LOGIN_SUCCESS",
-              payload: { uid: doc.id, user: doc.data() },
-            });
-            dispatch({
-              type: "CLEAR_COMPANY_ID",
-            });
-            onSuccess();
-          })
-          .catch((error) => toast.error(error.message));
+        const unsub = onSnapshot(doc(db, "users", uid), (doc) => {
+          dispatch({
+            type: "LOGIN_SUCCESS",
+            payload: { uid: doc.id, user: doc.data() },
+          });
+          dispatch({
+            type: "CLEAR_COMPANY_ID",
+          });
+          onSuccess();
+        });
       })
       .catch((err: any) => toast.error(err.message));
   } catch (error) {
@@ -107,18 +104,13 @@ export const loginUser = (data: any, onSuccess: any) => async (
   }
 };
 
-export const reRegisterSnapshot = (uid: string) => async (dispatch: any) => {
+export const reRegisterSnapshot = (uid: string, onSuccess: any) => async (
+  dispatch: any
+) => {
   try {
-    const colRef = await collection(db, "users");
-    const docRef = await doc(colRef, uid);
-    getDoc(docRef)
-      .then((doc) => {
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: { uid: doc.id, user: doc.data() },
-        });
-      })
-      .catch((err: any) => toast.error(err.message));
+    const unsub = await onSnapshot(doc(db, "users", uid), async (doc) => {
+      console.log(doc.data());
+    });
   } catch (error) {
     toast.error(error.message);
   }

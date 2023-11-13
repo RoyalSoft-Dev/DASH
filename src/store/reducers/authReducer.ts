@@ -41,6 +41,13 @@ const authReducer = (
         ...state,
         companyID: "",
       };
+    case "LOGOUT":
+      return {
+        ...state,
+        uid: "",
+        isAuthenticated: false,
+        user: null,
+      };
     default:
       return state;
   }

@@ -10,11 +10,14 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 // routes
 import { useRouter } from 'src/routes/hooks';
-// hooks
-import { useMockedUser } from 'src/hooks/use-mocked-user';
 // components
 import { varHover } from 'src/components/animate';
 import CustomPopover, { usePopover } from 'src/components/custom-popover';
+
+import { getAuth, signOut } from 'firebase/auth'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -38,19 +41,24 @@ const OPTIONS = [
 export default function AccountPopover() {
   const router = useRouter();
 
-  const { user } = useMockedUser();
-
   const popover = usePopover();
 
-  const handleLogout = async () => {
-    try {
-      // Log out function call
+  const navigate = useNavigate()
+  const dispatch: any = useDispatch()
 
-      popover.onClose();
-      router.replace('/');
-    } catch (error) {
-      console.error(error);
-    }
+  const handleLogout = async () => {
+    // Log out function call
+    const auth = getAuth()
+    await signOut(auth).then(() => {
+      navigate('/')
+      dispatch({
+        type: 'LOGOUT',
+      })
+      toast.success('Log out successfully')
+    }).catch((error: any) => toast.error(error.message))
+
+    popover.onClose();
+    router.replace('/');
   };
 
   const handleClickItem = (path: string) => {
@@ -77,26 +85,26 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src={user?.photoURL}
-          alt={user?.displayName}
+          src={''}
+          alt={'Brian'}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {user?.displayName.charAt(0).toUpperCase()}
+          {'Smile'}
         </Avatar>
       </IconButton>
 
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {user?.displayName}
+            {'Smile'}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user?.email}
+            {'smiledev10162@gmail.com'}
           </Typography>
         </Box>
 

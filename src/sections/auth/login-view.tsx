@@ -13,7 +13,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 // routes
 import { useSearchParams, useRouter } from 'src/routes/hooks';
 // config
-import { PATH_AFTER_LOGIN } from 'src/config-global';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components

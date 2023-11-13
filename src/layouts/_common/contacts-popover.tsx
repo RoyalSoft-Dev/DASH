@@ -52,7 +52,7 @@ export default function ContactsPopover() {
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 sx={{ mr: 2 }}
               >
-                <Avatar alt={contact.name} src={contact.avatarUrl} />
+                <Avatar alt={contact.name} src={''} />
               </Badge>
 
               <ListItemText

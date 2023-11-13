@@ -11,7 +11,7 @@ import TableContainer from '@mui/material/TableContainer';
 // routes
 import { useRouter } from 'src/routes/hooks';
 // _mock
-import { _userList, _roles } from 'src/_mock';
+// import { _userList } from 'src/_mock';
 // hooks
 import { useBoolean } from 'src/hooks/use-boolean';
 // components
@@ -62,7 +62,7 @@ export default function TeamManagementTableCP(props: any) {
 
     const confirm = useBoolean();
 
-    const [tableData, setTableData] = useState(_userList);
+    const [tableData, setTableData] = useState([]);
 
     const [filters, setFilters] = useState(defaultFilters);
 
@@ -96,7 +96,7 @@ export default function TeamManagementTableCP(props: any) {
 
     const handleDeleteRow = useCallback(
         (id: string) => {
-            const deleteRow = tableData.filter((row) => row.id !== id);
+            const deleteRow = tableData.filter((row: any) => row.id !== id);
             setTableData(deleteRow);
 
             table.onUpdatePageDeleteRow(dataInPage.length);
@@ -105,7 +105,7 @@ export default function TeamManagementTableCP(props: any) {
     );
 
     const handleDeleteRows = useCallback(() => {
-        const deleteRows = tableData.filter((row) => !table.selected.includes(row.id));
+        const deleteRows = tableData.filter((row: any) => !table.selected.includes(row.id));
         setTableData(deleteRows);
 
         table.onUpdatePageDeleteRows({
@@ -118,7 +118,7 @@ export default function TeamManagementTableCP(props: any) {
     const handleEditRow = useCallback(
         (id: string) => {
             // router.push(paths.dashboard.user.edit(id));
-            props.setOpenEditRoleDialog(true)
+            props.setOpenEditRoleDialog
         },
         [router]
     );
@@ -141,7 +141,7 @@ export default function TeamManagementTableCP(props: any) {
                     <UserTableToolbar
                         filters={filters}
                         onFilters={handleFilters}
-                        roleOptions={_roles}
+                        roleOptions={[]}
                     />
 
                     {canReset && (
@@ -162,7 +162,7 @@ export default function TeamManagementTableCP(props: any) {
                             onSelectAllRows={(checked) =>
                                 table.onSelectAllRows(
                                     checked,
-                                    tableData.map((row) => row.id)
+                                    tableData.map((row: any) => row.id)
                                 )
                             }
                             action={
@@ -186,7 +186,7 @@ export default function TeamManagementTableCP(props: any) {
                                     onSelectAllRows={(checked) =>
                                         table.onSelectAllRows(
                                             checked,
-                                            tableData.map((row) => row.id)
+                                            tableData.map((row: any) => row.id)
                                         )
                                     }
                                 />
