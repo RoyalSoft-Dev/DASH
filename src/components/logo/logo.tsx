@@ -5,6 +5,9 @@ import Link from '@mui/material/Link';
 import Box, { BoxProps } from '@mui/material/Box';
 // routes
 import { RouterLink } from 'src/routes/components';
+import { Card, CardMedia } from '@mui/material';
+// Logo load
+import DashLogo from 'src/assets/images/logo/DASH.png'
 
 // ----------------------------------------------------------------------
 
@@ -77,6 +80,9 @@ const Logo = forwardRef<HTMLDivElement, LogoProps>(
             />
           </g>
         </svg>
+        {/* <Card>
+          <CardMedia component={'img'} src={DashLogo} alt={'Logo'} />
+        </Card> */}
       </Box>
     );
 
