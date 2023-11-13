@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 // sections
-import FourView from 'src/sections/four/view';
+import Settings from 'src/sections/Settings/view';
 
 // ----------------------------------------------------------------------
 
@@ -11,7 +11,7 @@ export default function Page() {
         <title> Dashboard: Four</title>
       </Helmet>
 
-      <FourView />
+      <Settings />
     </>
   );
 }

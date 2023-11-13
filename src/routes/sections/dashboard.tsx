@@ -12,7 +12,7 @@ import { LoadingScreen } from 'src/components/loading-screen';
 const IndexPage = lazy(() => import('src/pages/dashboard/one'));
 const PageTwo = lazy(() => import('src/pages/dashboard/two'));
 const TeamManagement = lazy(() => import('src/pages/dashboard/team-management'));
-const PageFour = lazy(() => import('src/pages/dashboard/four'));
+const Settings = lazy(() => import('src/pages/dashboard/settings'));
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ export const dashboardRoutes = [
       { element: <IndexPage />, index: true },
       { path: 'users', element: <PageTwo /> },
       { path: 'team-management', element: <TeamManagement /> },
-      { path: 'settings', element: <PageFour /> },
+      { path: 'settings', element: <Settings /> },
     ],
   },
 ];

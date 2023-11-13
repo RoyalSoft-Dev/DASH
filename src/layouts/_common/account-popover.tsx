@@ -17,22 +17,22 @@ import CustomPopover, { usePopover } from 'src/components/custom-popover';
 import { getAuth, signOut } from 'firebase/auth'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
 const OPTIONS = [
-  {
-    label: 'Home',
-    linkTo: '/',
-  },
-  {
-    label: 'Profile',
-    linkTo: '/#1',
-  },
+  // {
+  //   label: 'Home',
+  //   linkTo: '/',
+  // },
+  // {
+  //   label: 'Profile',
+  //   linkTo: '/#1',
+  // },
   {
     label: 'Settings',
-    linkTo: '/#2',
+    linkTo: '/dashboard/settings',
   },
 ];
 
@@ -43,8 +43,10 @@ export default function AccountPopover() {
 
   const popover = usePopover();
 
+  // Defined by smile
   const navigate = useNavigate()
   const dispatch: any = useDispatch()
+  const { user } = useSelector((state: any) => state.auth)
 
   const handleLogout = async () => {
     // Log out function call
@@ -86,25 +88,25 @@ export default function AccountPopover() {
       >
         <Avatar
           src={''}
-          alt={'Brian'}
+          alt={user.name}
           sx={{
             width: 36,
             height: 36,
             border: (theme) => `solid 2px ${theme.palette.background.default}`,
           }}
         >
-          {'Smile'}
+          {user.name.slice(0, 1)}
         </Avatar>
       </IconButton>
 
       <CustomPopover open={popover.open} onClose={popover.onClose} sx={{ width: 200, p: 0 }}>
         <Box sx={{ p: 2, pb: 1.5 }}>
           <Typography variant="subtitle2" noWrap>
-            {'Smile'}
+            {user.name}
           </Typography>
 
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {'smiledev10162@gmail.com'}
+            {user.email}
           </Typography>
         </Box>
 

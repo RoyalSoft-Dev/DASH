@@ -11,10 +11,15 @@ import { paths } from 'src/routes/paths';
 import Label from 'src/components/label';
 // Load MUI icons
 import EditIcon from '@mui/icons-material/Edit';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
 export default function NavUpgrade() {
+
+  const { user } = useSelector((state: any) => state.auth)
+  const navigate = useNavigate()
 
   return (
     <Stack
@@ -26,7 +31,7 @@ export default function NavUpgrade() {
     >
       <Stack alignItems="center">
         <Box sx={{ position: 'relative' }}>
-          <Avatar src={''} alt={'smile'} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
+          <Avatar src={''} alt={user.name} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
           <Label
             variant="filled"
             sx={{
@@ -40,17 +45,17 @@ export default function NavUpgrade() {
               borderRadius: 1
             }}
           >
-            <EditIcon sx={{ width: 12, height: 12 }} color='success' />
+            <EditIcon onClick={() => navigate('/dashboard/settings')} sx={{ width: 12, height: 12, cursor: 'pointer' }} color='success' />
           </Label>
         </Box>
 
         <Stack spacing={0.5} sx={{ mt: 1.5, mb: 2 }}>
           <Typography variant="subtitle2" noWrap fontSize={20} color={'white'}>
-            {'Brian'}
+            {user.name}
           </Typography>
 
           <Typography variant="body2" noWrap fontSize={15} color={'white'}>
-            {'smiledev10162@gmail.com'}
+            {user.email}
           </Typography>
         </Stack>
 
