@@ -48,7 +48,7 @@ export const getCompanyID = (password: string, onSuccess: any) => async (
       });
     }
   } catch (error) {
-    toast.error(error.message);
+    toast.error("Incorrect company information");
   }
 };
 
@@ -80,12 +80,12 @@ export const registerUser = (
             onSuccess();
           })
           .catch((error: any) => {
-            toast.error(error.message);
+            toast.error("Fail the register");
           });
       })
-      .catch((err: any) => toast.error(err.message));
+      .catch((err: any) => toast.error("Fail the register"));
   } catch (error) {
-    toast.error(error.message);
+    toast.error("Fail the register");
   }
 };
 
@@ -109,9 +109,9 @@ export const loginUser = (data: any, onSuccess: any) => async (
           onSuccess();
         });
       })
-      .catch((err: any) => toast.error(err.message));
+      .catch((err: any) => toast.error("Fail the login"));
   } catch (error) {
-    toast.error(error.message);
+    toast.error("Fail the login");
   }
 };
 
@@ -123,7 +123,7 @@ export const reRegisterSnapshot = (uid: string, onSuccess: any) => async (
       console.log(doc.data());
     });
   } catch (error) {
-    toast.error(error.message);
+    toast.error("Fail the user information");
   }
 };
 
@@ -155,15 +155,14 @@ export const uploadAvatar = (
                 })
               );
             })
-            .catch((err: any) => toast.error(err.message));
-          // onSuccess(downloadURL);
+            .catch((err: any) => toast.error("Fail uploading the avatar"));
         })
-        .catch((err: any) => toast.error(err.message));
+        .catch((err: any) => toast.error("Fail uploading the avatar"));
     }
     dispatch(loader(false));
   } catch (error) {
     dispatch(loader(false));
-    toast.error(error.message);
+    toast.error("Fail uploading the avatar");
   }
 };
 
@@ -183,7 +182,7 @@ export const getUser = (id: string, onSuccess: any) => async (
       toast.error("Fail the updating");
     }
   } catch (error) {
-    console.log(error.message);
+    console.log("Fail loading the user information");
   }
 };
 
@@ -230,7 +229,7 @@ export const updateUser = (
     dispatch(loader(false));
   } catch (error) {
     dispatch(loader(false));
-    toast.error(error.message);
+    toast.error("Fail updating the profile");
   }
 };
 

@@ -57,7 +57,7 @@ export default function AccountPopover() {
         type: 'LOGOUT',
       })
       toast.success('Log out successfully')
-    }).catch((error: any) => toast.error(error.message))
+    }).catch((error: any) => toast.error('Fail Log out'))
 
     popover.onClose();
     router.replace('/');
