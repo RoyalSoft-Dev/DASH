@@ -23,6 +23,8 @@ import {
   ContactsPopover,
   NotificationsPopover,
 } from '../_common';
+import { LoadingScreen } from 'src/components/loading-screen';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +33,7 @@ type Props = {
 };
 
 export default function Header({ onOpenNav }: Props) {
+  const { loading } = useSelector((state: any) => state.auth)
   const theme = useTheme();
 
   const settings = useSettingsContext();
@@ -114,6 +117,7 @@ export default function Header({ onOpenNav }: Props) {
       >
         {renderContent}
       </Toolbar>
+      {loading && <LoadingScreen />}
     </AppBar>
   );
 }

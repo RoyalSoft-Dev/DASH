@@ -116,8 +116,6 @@ export default function JwtRegisterView() {
           toast.success('Registered successfully')
         }))
       }
-
-      // router.push(returnTo || PATH_AFTER_LOGIN);
     } catch (error) {
       console.error(error);
       reset();

@@ -24,6 +24,11 @@ const authReducer = (
   action: ActionType = { type: "", payload: null }
 ) => {
   switch (action.type) {
+    case "LOADING":
+      return {
+        ...state,
+        loading: action.payload,
+      };
     case "GET_COMPANY_ID":
       return {
         ...state,
@@ -47,6 +52,11 @@ const authReducer = (
         uid: "",
         isAuthenticated: false,
         user: {},
+      };
+    case "UPDATE_USER":
+      return {
+        ...state,
+        user: action.payload,
       };
     default:
       return state;

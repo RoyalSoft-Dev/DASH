@@ -1,18 +1,17 @@
 // @mui
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-// routes
-import { paths } from 'src/routes/paths';
-// locales
 // components
 import Label from 'src/components/label';
 // Load MUI icons
 import EditIcon from '@mui/icons-material/Edit';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { Card, CardMedia } from '@mui/material';
+// Load logo
+import DASH_LOGO from 'src/assets/images/logo/DASH_White.png'
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +29,9 @@ export default function NavUpgrade() {
       }}
     >
       <Stack alignItems="center">
+        <img src={DASH_LOGO} alt='DASH' />
         <Box sx={{ position: 'relative' }}>
-          <Avatar src={''} alt={user.name} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
+          <Avatar src={user.avatar} alt={user.name} sx={{ width: 80, height: 80, border: 'solid', borderColor: 'white' }} />
           <Label
             variant="filled"
             sx={{

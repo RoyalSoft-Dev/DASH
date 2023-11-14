@@ -105,9 +105,7 @@ export default function LoginView() {
 
   const renderHead = (
     <Stack sx={{ mb: 5 }}>
-      <Card sx={{ boxShadow: 'none' }}>
-        <CardMedia component={'img'} sx={{ width: '163px' }} image={DashLogo} alt='Dash Logo' />
-      </Card>
+      <img src={DashLogo} style={{ width: '163px' }} alt='Dash' />
       <Typography marginTop={5} variant="h4">Welcome to Dash</Typography>
       <Typography variant="h4">Sign In to Continue.</Typography>
 

@@ -11,7 +11,7 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 // Langing image load
 import MainImage from 'src/assets/images/landing/main.png'
-import EarthImage1 from 'src/assets/images/landing/earth1.png'
+import EarthImage3 from 'src/assets/images/landing/earth3.png'
 import EarthImage2 from 'src/assets/images/landing/earth2.png'
 import PeopleImage from 'src/assets/images/landing/people.png'
 
@@ -85,9 +85,11 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
       <Box
         component="img"
         alt="auth"
-        src={EarthImage1}
+        src={EarthImage3}
         sx={{
           position: 'absolute',
+          top: '60%',
+          left: 50,
           zIndex: 100,
           maxWidth: {
             xs: 480,
@@ -100,9 +102,12 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
       <Box
         component="img"
         alt="auth"
-        src={MainImage}
+        src={EarthImage2}
         sx={{
+          position: 'absolute',
           maxWidth: {
+            top: -50,
+            left: -150,
             xs: 480,
             lg: 560,
             xl: 720,
@@ -110,18 +115,23 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
         }}
       />
 
-      <Box
-        component="img"
-        alt="auth"
-        src={MainImage}
-        sx={{
-          maxWidth: {
-            xs: 480,
-            lg: 560,
-            xl: 720,
-          },
-        }}
-      />
+      <Box sx={{ position: 'absolute' }}>
+        <Box
+          component="img"
+          alt="auth"
+          src={PeopleImage}
+          sx={{
+            maxWidth: {
+              xs: 480,
+              lg: 560,
+              xl: 720,
+            },
+          }}
+        />
+
+        <Typography sx={{ position: 'relative' }} fontSize={35} fontWeight={'bold'} align='center' color={'#388E3C'}>Seamless Project Management</Typography>
+        <Typography fontWeight={'bold'} align='center' fontSize={20}>A few clicks away</Typography>
+      </Box>
     </Stack>
   );
 
@@ -133,7 +143,7 @@ export default function AuthClassicLayout({ children, image, title }: Props) {
         minHeight: '100vh',
       }}
     >
-      {renderLogo}
+      {/* {renderLogo} */}
 
       {mdUp && renderSection}
 

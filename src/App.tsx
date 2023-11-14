@@ -34,10 +34,11 @@ function App() {
 
   const dispatch: any = useDispatch()
   const navigate = useNavigate()
+  const { uid } = useSelector((state: any) => state.auth)
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user && uid) {
         const uid = user.uid;
         console.log("uid", uid)
       } else {
@@ -48,7 +49,6 @@ function App() {
       }
     });
   }, [])
-
 
   return (
     <SettingsProvider
