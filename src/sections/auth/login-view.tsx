@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -22,7 +22,7 @@ import { Box, Button, Card, CardMedia, Checkbox, Dialog, DialogActions, DialogCo
 // Logo
 import DashLogo from 'src/assets/images/logo/DASH.png'
 // Load firebase database
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { getCompanyID, loginUser } from 'src/store/actions/authAction';
 import { toast } from 'react-toastify';
@@ -43,8 +43,15 @@ export default function LoginView() {
   // Defined by smile
   const dispatch: any = useDispatch()
   const navigate = useNavigate()
+  const { uid } = useSelector((state: any) => state.auth)
   const [companyPassword, setCompanyPassword] = useState('')
   const [openInputPasswordDialog, setOpenInputPasswordDialog] = useState(false)
+
+  useEffect(() => {
+    if (uid) {
+      navigate('/dashboard')
+    }
+  }, [uid])
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email must be a valid email address'),

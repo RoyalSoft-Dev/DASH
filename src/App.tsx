@@ -24,23 +24,29 @@ import { useEffect, useState } from 'react';
 import { store, persistor } from './store/index';
 import { PersistGate } from 'redux-persist/integration/react';
 import { reRegisterSnapshot } from './store/actions/authAction';
-import { EmailAuthProvider, getAuth, reauthenticateWithCredential } from 'firebase/auth'
+import { EmailAuthProvider, getAuth, reauthenticateWithCredential, onAuthStateChanged } from 'firebase/auth'
+import { auth } from './config/firebase'
 
 // ----------------------------------------------------------------------
 
 function App() {
-  useScrollToTop();
+  // useScrollToTop();
 
   const dispatch: any = useDispatch()
-  let { uid } = useSelector((state: any) => state.auth)
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (uid) {
-      navigate('/dashboard')
-    } else {
-      navigate('/auth/login')
-    }
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const uid = user.uid;
+        console.log("uid", uid)
+      } else {
+        dispatch({
+          type: 'LOGOUT'
+        })
+        navigate('/auth/login')
+      }
+    });
   }, [])
 
 

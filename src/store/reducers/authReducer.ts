@@ -46,7 +46,7 @@ const authReducer = (
         ...state,
         uid: "",
         isAuthenticated: false,
-        user: null,
+        user: {},
       };
     default:
       return state;

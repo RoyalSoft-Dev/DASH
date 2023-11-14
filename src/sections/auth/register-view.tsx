@@ -51,16 +51,18 @@ export default function JwtRegisterView() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    if (!companyID) {
+      navigate('/auth/login')
+    } else {
+      navigate('/auth/register')
+    }
+  }, [companyID])
+
+  useEffect(() => {
     if (uid) {
       navigate('/dashboard')
-    } else {
-      if (!companyID) {
-        navigate('/auth/login')
-      } else {
-        navigate('/auth/register')
-      }
     }
-  })
+  }, [uid])
 
   const RegisterSchema = Yup.object().shape({
     name: Yup.string().required('Name required'),
