@@ -32,6 +32,7 @@ export default function UserNewEditForm() {
     const [username, setUsername] = useState(user.name)
     const [email, setEmail] = useState(user.email)
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber)
+    const [oldPassword, setOldPassword] = useState('')
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [notificationFlag, setNotificationFlag] = useState(user.notification)
@@ -76,32 +77,31 @@ export default function UserNewEditForm() {
 
     const updatePasswordInfo = () => {
         let updateInfo = {}
-        if (!newPassword && !confirmPassword) {
+        let updatePasswordInfo = {}
+        if (!oldPassword && !newPassword && !confirmPassword) {
             updateInfo = {
                 name: username,
-                email,
                 phoneNumber,
                 notification: notificationFlag,
             }
         } else {
-            if (newPassword !== confirmPassword) {
-                toast.error('Password is not correct')
+            if (newPassword !== confirmPassword && newPassword.length < 6 && oldPassword.length < 6) {
+                toast.error('Incorrect password format')
                 return
-            }
-            if (newPassword.length < 6) {
-                toast.error('Password should includes 6 characters')
-                return
-            }
-            updateInfo = {
-                name: username,
-                email,
-                phoneNumber,
-                notification: notificationFlag,
-                newPassword,
-                confirmPassword
+            } else {
+                updateInfo = {
+                    name: username,
+                    phoneNumber,
+                    notification: notificationFlag,
+                }
+                updatePasswordInfo = {
+                    oldPassword,
+                    newPassword,
+                    confirmPassword
+                }
             }
         }
-        dispatch(updateUser(uid, updateInfo, () => {
+        dispatch(updateUser(uid, email, updateInfo, updatePasswordInfo, () => {
             toast.success('Updated the profile')
         }))
     }
@@ -152,6 +152,24 @@ export default function UserNewEditForm() {
                 </FormControl>
                 <FormControlLabel sx={{ marginTop: 1 }} control={<Switch checked={notificationFlag} onChange={e => setNotificationFlag(e.target.checked)} />} label="SMS Notifications" />
                 <FormControl fullWidth>
+                    <FormHelperText>Old Password</FormHelperText>
+                    <TextField
+                        name="oldPassword"
+                        type={viewFlag ? 'text' : 'password'}
+                        value={oldPassword}
+                        onChange={e => setOldPassword(e.target.value)}
+                        InputProps={{
+                            endAdornment: (
+                                <InputAdornment position="end">
+                                    <IconButton onClick={() => setViewFlag(!viewFlag)} edge="end">
+                                        <Iconify icon={viewFlag ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                                    </IconButton>
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                </FormControl>
+                <FormControl fullWidth>
                     <FormHelperText>New Password</FormHelperText>
                     <TextField
                         name="newPassword"
@@ -192,7 +210,6 @@ export default function UserNewEditForm() {
                     <Button variant='contained' sx={{ marginLeft: 3 }} disabled={loading} fullWidth onClick={updatePasswordInfo}>Update</Button>
                 </Box>
             </Grid>
-
         </Grid >
     );
 }

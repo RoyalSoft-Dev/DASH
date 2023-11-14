@@ -187,64 +187,47 @@ export const getUser = (id: string, onSuccess: any) => async (
   }
 };
 
-export const updateUser = (id: string, data: any, onSuccess: any) => async (
-  dispatch: any
-) => {
+export const updateUser = (
+  id: string,
+  email: string,
+  data: any,
+  passwordInfo: any,
+  onSuccess: any
+) => async (dispatch: any) => {
   try {
     dispatch(loader(true));
     const auth: any = getAuth();
     const user = auth.currentUser;
     const docRef = await doc(db, "users", id);
-
-    if (user?.email != data.email) {
-      console.log(1);
-      updateEmail(user, data.email)
+    if (passwordInfo.newPassword && passwordInfo.oldPassword) {
+      const credential = EmailAuthProvider.credential(
+        email,
+        passwordInfo.oldPassword
+      );
+      reauthenticateWithCredential(user, credential)
         .then(() => {
-          updateDoc(docRef, { ...data, createdAt: serverTimestamp() })
-            .then(() => {
-              dispatch(
-                getUser(id, () => {
-                  if (data.newPassword) {
-                    updatePassword(user, data.newPassword)
-                      .then(() => {
-                        const authCredential = EmailAuthProvider.credential(
-                          data.email,
-                          data.newPassword
-                        );
-                        reauthenticateWithCredential(user, authCredential);
-                        onSuccess();
-                      })
-                      .catch((error: any) => toast.error(error.message));
-                  } else onSuccess();
-                })
-              );
-            })
-            .catch((err: any) => toast.error(err.message));
-        })
-        .catch((err) => toast.error(err.message));
-    } else {
-      console.log(2);
-      updateDoc(docRef, { ...data, createdAt: serverTimestamp() })
-        .then(() => {
-          dispatch(
-            getUser(id, () => {
-              if (data.newPassword) {
-                updatePassword(user, data.newPassword)
-                  .then(() => {
-                    // const authCredential = EmailAuthProvider.credential(
-                    //   data.email,
-                    //   data.newPassword
-                    // );
-                    // reauthenticateWithCredential(user, authCredential);
-                    onSuccess();
-                  })
-                  .catch((error: any) => toast.error(error.message));
-              } else onSuccess();
-            })
+          updatePassword(user, passwordInfo.newPassword).then(() =>
+            toast.success("Updated the password")
           );
         })
-        .catch((err: any) => toast.error(err.message));
+        .catch(() => toast.error("Old password is incorrect"));
     }
+    if (user?.email != email) {
+      updateEmail(user, email)
+        .then(() => toast.success("Updated the email"))
+        .catch(() => toast.error("Fail the Email Update"));
+    }
+
+    await updateDoc(docRef, { ...data, createdAt: serverTimestamp() })
+      .then(() => {
+        dispatch(
+          getUser(id, () => {
+            onSuccess();
+          })
+        );
+      })
+      .catch(() => toast.error("Fail the profile update"));
+    dispatch(loader(false));
   } catch (error) {
     dispatch(loader(false));
     toast.error(error.message);

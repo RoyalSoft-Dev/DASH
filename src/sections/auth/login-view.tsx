@@ -30,13 +30,7 @@ import { toast } from 'react-toastify';
 // ----------------------------------------------------------------------
 
 export default function LoginView() {
-  const router = useRouter();
-
   const [errorMsg, setErrorMsg] = useState('');
-
-  const searchParams = useSearchParams();
-
-  const returnTo = searchParams.get('returnTo');
 
   const password = useBoolean();
 
